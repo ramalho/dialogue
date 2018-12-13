@@ -5,11 +5,11 @@ The programs in this repository show how to build and test a REPL (Read-Eval-Pri
 
 ## The Dialogue testing class
 
-The most complicated code here is the `Dialogue` class, designed for testing REPLs. Given a multi-line interactive session transcript, a `Dialogue` instance emulates user interactions by offering a `fake_input` method which can mock the `input` built-in function in Python 3. Monkey-patching the `input` built-in before running a REPL will feed it with fake user inputs from a session transcript.
+The most complicated code here is the `Dialogue` class, designed for testing REPLs. Given a multi-line interactive session transcript, a `Dialogue` instance emulates user interactions by offering a `fake_input` method which can replace the `input` built-in function in Python 3.
 
-Each time the REPL calls `input`, the `fake_input` mock will print a prompt and a fake user input, then return the same user input string to the REPL for processing.
+Each of the REPLs here takes an input function as an optional argument, defaulting to `input`. To test, invoke the REPL with a `fake_input` method bound to a `Dialogue` instance. This method will print a prompt and a fake user input, then return the same user input string to the REPL for processing.
 
-The `Dialogue.session` instance attribute holds a multi-line string with all the prompts, user inputs and the outputs expected from the REPL under test.
+The `Dialogue.session` instance attribute holds a multi-line string with all the prompts, user inputs and the outputs expected from the REPL under test. This is used to `assert` the test case.
 
 See the `dialogue_test.py` module for two simple REPLs that exercise the `Dialogue` class.
 
@@ -37,6 +37,6 @@ Please type numbers.
 $
 ```
 
-> My father, Jairo Ramalho, liked to say that an adding machine with paper tape is much better than a handheld calculator or calculator app that only shows one number at a time. With the adding machine you can easily double check the numbers on the paper tape. My father would enjoy using `adder.py`.
+> My father, Jairo Ramalho, liked to say that an adding machine with paper tape is much better than a handheld calculator or calculator app that only shows one number at a time. With the adding machine you can easily double check the numbers on the paper tape. Jairo would enjoy using `adder.py`.
 
 ![Adding machine](adding-machine-500x.jpg "Adding machine with paper tape.")
