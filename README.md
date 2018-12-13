@@ -2,13 +2,17 @@
 
 The programs in this repository show how to build and test a REPL (Read-Eval-Print-Loop, the core loop of an interactive interpreter).
 
+
 ## The Dialogue testing class
 
 The most complicated code here is the `Dialogue` class, designed for testing REPLs. Given a multi-line interactive session transcript, a `Dialogue` instance emulates user interactions by offering a `fake_input` method which can mock the `input` built-in function in Python 3. Monkey-patching the `input` built-in before running a REPL will feed it with fake user inputs from a session transcript.
 
 Each time the REPL calls `input`, the `fake_input` mock will print a prompt and a fake user input, then return the same user input string to the REPL for processing.
 
-The `transcript` method returns a multi-line string with all the prompts, user inputs and the outputs expected from the REPL under test. See the `dialogue_test.py` module for two simple REPLs that exercise the `Dialogue` class.
+The `Dialogue.session` instance attribute holds a multi-line string with all the prompts, user inputs and the outputs expected from the REPL under test.
+
+See the `dialogue_test.py` module for two simple REPLs that exercise the `Dialogue` class.
+
 
 ## An adding machine REPL
 

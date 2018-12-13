@@ -15,6 +15,15 @@ def uppercaser():
         print(text.upper())
 
 
+def test_uppercaser(monkeypatch, capsys):
+    dlg = Dialogue('> Xyz\nXYZ\n')
+    with monkeypatch.context() as m:
+        m.setitem(__builtins__, "input", dlg.fake_input)
+        uppercaser()
+    captured = capsys.readouterr()
+    assert dlg.session == captured.out
+
+
 @mark.parametrize("session", [
     """
     > q
@@ -32,13 +41,13 @@ def uppercaser():
     THIRD
     """,
 ])
-def test_uppercaser(monkeypatch, capsys, session):
+def test_uppercaser_multiple(monkeypatch, capsys, session):
     dlg = Dialogue(session)
     with monkeypatch.context() as m:
         m.setitem(__builtins__, "input", dlg.fake_input)
         uppercaser()
     captured = capsys.readouterr()
-    assert dlg.transcript() == captured.out
+    assert dlg.session == captured.out
 
 
 def reverser():
@@ -81,4 +90,4 @@ def test_reverser(monkeypatch, capsys, session):
         m.setitem(__builtins__, "input", dlg.fake_input)
         reverser()
     captured = capsys.readouterr()
-    assert dlg.transcript() == captured.out
+    assert dlg.session == captured.out

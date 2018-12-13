@@ -40,4 +40,4 @@ def test_adder(monkeypatch, capsys, session):
         m.setitem(__builtins__, "input", dlg.fake_input)
         adder()
     captured = capsys.readouterr()
-    assert dlg.transcript() == captured.out
+    assert dlg.session == captured.out

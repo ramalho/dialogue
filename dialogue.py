@@ -10,17 +10,17 @@ class Dialogue():
         Python 3 ``input`` built-in function by printing a prompt, then
         a user input, and returning that input. Therefore, ``fake_input``
         can be used to mock ``input``, providing pre-recorded "user"
-        inputs to the system under test.
+        inputs to the REPL under test.
     """
 
     def __init__(self, session):
-        self.session = session
+        # dedent session given as indented string (see tests)
+        self.session = textwrap.dedent(session.lstrip('\n'))
         self.input_line_gen = iter(self)
         self.prompt = ''
 
     def __iter__(self):
         for line in self.session.splitlines():
-            line = line.strip()
             if line.startswith(self.prompt):
                 yield line[len(self.prompt):]
 
@@ -33,7 +33,3 @@ class Dialogue():
             raise EOFError()
         print(prompt + line)
         return line
-
-    def transcript(self):
-        """Return the session transcript (inputs and outputs)"""
-        return textwrap.dedent(self.session.lstrip('\n'))
