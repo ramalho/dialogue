@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 
-def adder():
+def adder(input_fn=input):
     """ This REPL adds numbers. To exit, enter 0.
 
         The prompt displays an incrementing index.
@@ -11,7 +11,7 @@ def adder():
     print('Enter 0 to quit.')
     while True:
         try:
-            text = input(f'[{index}] ')
+            text = input_fn(f'[{index}] ')
         except EOFError:  # no more inputs
             break
         if text == '0':  # exit REPL

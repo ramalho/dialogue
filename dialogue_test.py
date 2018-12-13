@@ -3,11 +3,11 @@ from pytest import mark
 from dialogue import Dialogue
 
 
-def uppercaser():
+def uppercaser(input_fn=input):
     """ This REPL outputs the user input uppercased."""
     while True:
         try:
-            text = input('> ')
+            text = input_fn('> ')
         except EOFError:  # no more inputs
             break
         if text == 'q':  # quit
@@ -15,11 +15,9 @@ def uppercaser():
         print(text.upper())
 
 
-def test_uppercaser(monkeypatch, capsys):
+def test_uppercaser(capsys):
     dlg = Dialogue('> Xyz\nXYZ\n')
-    with monkeypatch.context() as m:
-        m.setitem(__builtins__, "input", dlg.fake_input)
-        uppercaser()
+    uppercaser(dlg.fake_input)
     captured = capsys.readouterr()
     assert dlg.session == captured.out
 
@@ -41,16 +39,14 @@ def test_uppercaser(monkeypatch, capsys):
     THIRD
     """,
 ])
-def test_uppercaser_multiple(monkeypatch, capsys, session):
+def test_uppercaser_multiple(capsys, session):
     dlg = Dialogue(session)
-    with monkeypatch.context() as m:
-        m.setitem(__builtins__, "input", dlg.fake_input)
-        uppercaser()
+    uppercaser(dlg.fake_input)
     captured = capsys.readouterr()
     assert dlg.session == captured.out
 
 
-def reverser():
+def reverser(input_fn=input):
     """ This REPL outputs the user input reversed.
 
         The prompt includes an incrementing index.
@@ -58,7 +54,7 @@ def reverser():
     index = 1
     while True:
         try:
-            text = input(f'{index}: ')
+            text = input_fn(f'{index}: ')
         except EOFError:  # no more inputs
             break
         if text == 'exit':  # exit REPL
@@ -86,8 +82,6 @@ def reverser():
 ])
 def test_reverser(monkeypatch, capsys, session):
     dlg = Dialogue(session)
-    with monkeypatch.context() as m:
-        m.setitem(__builtins__, "input", dlg.fake_input)
-        reverser()
+    reverser(dlg.fake_input)
     captured = capsys.readouterr()
     assert dlg.session == captured.out

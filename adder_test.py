@@ -34,10 +34,8 @@ from adder import adder
     7.0
     """,
 ])
-def test_adder(monkeypatch, capsys, session):
+def test_adder(capsys, session):
     dlg = Dialogue(session)
-    with monkeypatch.context() as m:
-        m.setitem(__builtins__, "input", dlg.fake_input)
-        adder()
+    adder(dlg.fake_input)
     captured = capsys.readouterr()
     assert dlg.session == captured.out
