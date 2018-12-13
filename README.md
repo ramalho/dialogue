@@ -25,6 +25,8 @@ Enter 0 to quit.
 32.5
 [3] 17.97
 50.47
+[4] zzz
+Please type numbers.
 [4] 33.05
 83.52
 [5] 0
