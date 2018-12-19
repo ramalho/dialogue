@@ -1,9 +1,21 @@
-from distutils.core import setup
+import setuptools
 
-setup(
-    name='Dialogue',
-    version='1.0',
-    packages=['dialogue',],
-    license='BSD 3-Clause',
-    long_description=open('README.md').read(),
+with open("README.md", "r") as fh:
+    long_description = fh.read()
+
+setuptools.setup(
+    name="Dialogue",
+    version="1.0b",
+    author="Luciano Ramalho",
+    description="Dialogue class for testing REPLs",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    url="https://github.com/ramalho/dialogue",
+    packages=setuptools.find_packages(),
+    classifiers=[
+        "Programming Language :: Python :: 3.7",
+        "License :: OSI Approved :: BSD License",
+        "Operating System :: OS Independent",
+    ],
 )
+
