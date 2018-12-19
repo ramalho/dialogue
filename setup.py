@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="Dialogue",
+    name="dialogue_tester",
     version="1.0b",
     author="Luciano Ramalho",
     description="Dialogue class for testing REPLs",
