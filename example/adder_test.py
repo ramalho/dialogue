@@ -2,7 +2,7 @@ from pytest import mark
 
 from dialogue import Dialogue
 
-from adder_example import adder
+from adder import adder
 
 
 @mark.parametrize("session", [
