@@ -1,6 +1,13 @@
 import textwrap
 
 
+def normalize(lines):
+	""" Remove trailing whitespace from each line, 
+	    keeping all line breaks except the last."""
+
+	return '\n'.join(line.rstrip() for line in lines.strip().splitlines())
+
+
 class Dialogue():
     """ ``Dialogue`` allows testing of text-based interactions or REPLs.
 
@@ -15,14 +22,14 @@ class Dialogue():
 
     def __init__(self, session):
         # dedent session given as indented string (see tests)
-        self.session = textwrap.dedent(session.lstrip('\n'))
+        self.session = normalize(textwrap.dedent(session))
         self.input_line_gen = iter(self)
         self.prompt = ''
 
     def __iter__(self):
         for line in self.session.splitlines():
-            if line.startswith(self.prompt):
-                yield line[len(self.prompt):]
+            if line.startswith(self.prompt.rstrip()):
+                yield line[len(self.prompt):].rstrip()
 
     def fake_input(self, prompt):
         """Use this method to mock the ``input`` built-in."""

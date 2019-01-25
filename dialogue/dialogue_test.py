@@ -1,6 +1,18 @@
 from pytest import mark
 
-from dialogue import Dialogue
+from dialogue import Dialogue, normalize
+
+
+@mark.parametrize("lines, want", [
+    ("a", "a"),
+    ("b ", "b"),
+    ("c\n", "c"),
+    ("d \n", "d"),
+    ("e\t \n", "e"),
+    ("f \ng \n", "f\ng"),
+])
+def test_normalize(lines, want):
+    assert want == normalize(lines)
 
 
 def uppercaser(input_fn=input):
@@ -19,7 +31,7 @@ def test_uppercaser(capsys):
     dlg = Dialogue('> Xyz\nXYZ\n')
     uppercaser(dlg.fake_input)
     captured = capsys.readouterr()
-    assert dlg.session == captured.out
+    assert dlg.session == normalize(captured.out)
 
 
 @mark.parametrize("session", [
@@ -43,7 +55,7 @@ def test_uppercaser_multiple(capsys, session):
     dlg = Dialogue(session)
     uppercaser(dlg.fake_input)
     captured = capsys.readouterr()
-    assert dlg.session == captured.out
+    assert dlg.session == normalize(captured.out)
 
 
 def reverser(input_fn=input):
@@ -70,6 +82,8 @@ def reverser(input_fn=input):
     """
     1: abc
     cba
+    2:
+    
     """,
     """
     1: 123
@@ -84,4 +98,4 @@ def test_reverser(monkeypatch, capsys, session):
     dlg = Dialogue(session)
     reverser(dlg.fake_input)
     captured = capsys.readouterr()
-    assert dlg.session == captured.out
+    assert dlg.session == normalize(captured.out)

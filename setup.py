@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="dialogue_tester",
-    version="1.0b",
+    version="1.0b5",
     author="Luciano Ramalho",
     description="Dialogue class for testing REPLs",
     long_description=long_description,
@@ -16,6 +16,6 @@ setuptools.setup(
         "Programming Language :: Python :: 3.7",
         "License :: OSI Approved :: BSD License",
         "Operating System :: OS Independent",
+        "Topic :: Software Development :: Testing",
     ],
 )
-

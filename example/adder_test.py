@@ -1,6 +1,6 @@
 from pytest import mark
 
-from dialogue import Dialogue
+from dialogue import Dialogue, normalize
 
 from adder import adder
 
@@ -38,4 +38,4 @@ def test_adder(capsys, session):
     dlg = Dialogue(session)
     adder(dlg.fake_input)
     captured = capsys.readouterr()
-    assert dlg.session == captured.out
+    assert dlg.session == normalize(captured.out)
