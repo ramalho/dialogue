@@ -1,7 +1,7 @@
 import textwrap
+from typing import Iterator
 
-
-def normalize(lines):
+def normalize(lines: str) -> str:
 	""" Remove trailing whitespace from each line, 
 	    keeping all line breaks except the last."""
 
@@ -20,7 +20,11 @@ class Dialogue():
         inputs to the REPL under test.
     """
 
-    def __init__(self, session):
+    session: str
+    input_line_gen: Iterator[str]
+    prompt: str
+
+    def __init__(self, session: str):
         # dedent session given as indented string (see tests)
         self.session = normalize(textwrap.dedent(session))
         self.input_line_gen = iter(self)
@@ -31,7 +35,7 @@ class Dialogue():
             if line.startswith(self.prompt.rstrip()):
                 yield line[len(self.prompt):].rstrip()
 
-    def fake_input(self, prompt):
+    def fake_input(self, prompt: str) -> str:
         """Use this method to mock the ``input`` built-in."""
         self.prompt = prompt
         try:
